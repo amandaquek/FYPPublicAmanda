@@ -1,37 +1,27 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-
-import NavigationApp from '../components/NavigationApp.jsx';
-import Footer from '../components/Footer.jsx';
+import Request from 'react-http-request';
 
 export default class About extends Component{
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      /*Initiate the state to have an empty array*/
-      posts: []
-    };
-  }
-
-  componentDidMount() {
-    /*Fetching of data from subreddit
-    axios.get(`http://www.reddit.com/r/${this.props.subreddit}.json`)*/
-    axios.get('http://54.191.109.239/FYPXpal/AmandaInfo.json')
-      .then(res => {
-        const posts = res.data.data.children.map(obj => obj.data);
-        this.setState({ posts });
-      });
-  }
-
   render() {
     return (
-      <div>
-        <h1>{this.state.posts}</h1>
-      </div>
+      <Request
+        url='http://54.191.109.239/FYPXpal/AmandaInfo'
+        method='get'
+        accept='application/json'
+        /*verbose={true}*/
+      >
+        {
+          ({error, result, loading}) => {
+            if (loading) {
+              return <div>loading...</div>;
+            } else {
+              return <div>{ JSON.stringify(result) }</div>;
+            }
+          }
+        }
+      </Request>
     );
   }
 }
