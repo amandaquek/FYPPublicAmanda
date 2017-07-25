@@ -30,12 +30,7 @@ export default class About extends Component{
   render() {
     return (
       <div>
-        <h1>{post.student_id}</h1>
-        <ul>
-          {this.state.posts.map(post =>
-            <li key={post.student_id}>{post.student_username}</li>
-          )}
-        </ul>
+        <h1>{this.state.posts}</h1>
       </div>
     );
   }
